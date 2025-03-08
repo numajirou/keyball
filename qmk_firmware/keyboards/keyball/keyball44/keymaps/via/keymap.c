@@ -316,23 +316,6 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
   return mouse_report;
 }
 
-#ifdef OLED_ENABLE
-
-#    include "lib/oledkit/oledkit.h"
-
-void oledkit_render_info_user(void) {
-  keyball_oled_render_keyinfo();
-  keyball_oled_render_ballinfo();
-  
-  oled_write_P(PSTR("Layer:"), false);
-  oled_write(get_u8_str(get_highest_layer(layer_state), ' '), false);
-  oled_write_P(PSTR(" MV:"), false);
-  oled_write(get_u8_str(mouse_movement, ' '), false);
-  oled_write_P(PSTR("/"), false);
-  oled_write(get_u8_str(user_config.to_clickable_movement, ' '), false);
-}
-#endif
-
 /////////////////////////////
 /// miniZoneの実装 ここまで ///
 ////////////////////////////
