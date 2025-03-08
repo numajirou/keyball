@@ -68,14 +68,14 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     keyball_set_scroll_mode(get_highest_layer(state) == 3);
     
     #ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
-    /* レイヤ０でのみ動作させる */
-    if (get_highest_layer(remove_auto_mouse_layer(state, true) == 0))
+    if (get_highest_layer(remove_auto_mouse_layer(state, true) != 0))
     {
       state = remove_auto_mouse_layer(state, false);
       set_auto_mouse_enable(false);
     }
     else
     {
+      /* レイヤ０でのみ動作させる */
       set_auto_mouse_enable(true);
     }
     #endif
