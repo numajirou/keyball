@@ -43,3 +43,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define KEYBALL_SCROLL_DIV_DEFAULT 5    // スクロール速度 (default: 4)
 #define TAPPING_TERM               150  //  レイヤ切り替わり速度 ミリ秒
 #define DYNAMIC_KEYMAP_LAYER_COUNT 7    // レイヤ数
+
+#define PRECISION_ENABLE // CPI速度調整有効化
+#define PRECISION_CPI 4  // 下げた時のCPI (1/100の値を指定。左記ならCPI 400)

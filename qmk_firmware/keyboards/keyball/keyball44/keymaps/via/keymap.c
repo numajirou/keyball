@@ -20,6 +20,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
+#ifdef PRECISION_ENABLE
+#include "cpiChange.c"
+#endif
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
@@ -33,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [1] = LAYOUT_universal(
     SSNP_FRE ,  KC_F1   , KC_F2    , KC_F3   , KC_F4    , KC_F5    ,                                         KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
     SSNP_VRT ,  _______ , _______  , KC_UP   , KC_ENT   , KC_DEL   ,                                         KC_PGUP  , KC_BTN1  , KC_UP    , KC_BTN2  , KC_BTN3  , KC_F12   ,
-    SSNP_HOR ,  _______ , KC_LEFT  , KC_DOWN , KC_RGHT  , KC_BSPC  ,                                         KC_PGDN  , KC_LEFT  , KC_DOWN  , KC_RGHT  , _______  , _______  ,
+    SSNP_HOR ,  _______ , KC_LEFT  , KC_DOWN , KC_RGHT  , PRC_SW  ,                                         KC_PGDN  , KC_LEFT  , KC_DOWN  , KC_RGHT  , _______  , _______  ,
                   _______  , _______ , _______  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
   ),
 
@@ -58,14 +62,15 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     keyball_set_scroll_mode(get_highest_layer(state) == 3);
     
     #ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
-    switch(get_highest_layer(remove_auto_mouse_layer(state, true))) {
-        case 1:
-            state = remove_auto_mouse_layer(state, false);
-            set_auto_mouse_enable(false);
-            break;
-        default:
-            set_auto_mouse_enable(true);
-            break;
+    /* レイヤ０でのみ動作させる */
+    if get_highest_layer(remove_auto_mouse_layer(state, true) == 0)
+    {
+      state = remove_auto_mouse_layer(state, false);
+      set_auto_mouse_enable(false);
+    }
+    else
+    {
+      set_auto_mouse_enable(true);
     }
     #endif
     
@@ -88,3 +93,23 @@ void pointing_device_init_user(void) {
     set_auto_mouse_enable(true);
 }
 #endif
+
+enum my_keyball_keycodes {
+  PRC_SW,                       // Precision モードスイッチ  
+};
+
+// キーマップの任意の場所に、「PRC_SW」を追加 
+// 例：
+//  [3] = LAYOUT_universal(
+//    PRC_SW
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+      #ifdef PRECISION_ENABLE
+      case PRC_SW:  precision_switch(record->event.pressed); return false;
+      #endif
+      default: break;
+  }
+  return true;
+}
