@@ -24,6 +24,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "cpiChange.c"
 #endif
 
+
+enum my_keyball_keycodes {
+  PRC_SW,                       // Precision モードスイッチ  
+};
+
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
@@ -93,16 +99,6 @@ void pointing_device_init_user(void) {
     set_auto_mouse_enable(true);
 }
 #endif
-
-enum my_keyball_keycodes {
-  PRC_SW,                       // Precision モードスイッチ  
-};
-
-// キーマップの任意の場所に、「PRC_SW」を追加 
-// 例：
-//  [3] = LAYOUT_universal(
-//    PRC_SW
-
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
