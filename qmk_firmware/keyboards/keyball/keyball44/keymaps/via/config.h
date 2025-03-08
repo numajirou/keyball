@@ -40,5 +40,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define KEYBALL_CPI_DEFAULT        700  // マウス速度 (default: 500)
 #define KEYBALL_SCROLL_DIV_DEFAULT 5    // スクロール速度 (default: 4)
-#define TAPPING_TERM               150  //  レイヤ切り替わり速度 ミリ秒
-#define DYNAMIC_KEYMAP_LAYER_COUNT 9    // レイヤ数
+#define TAPPING_TERM               100  //  レイヤ切り替わり速度 ミリ秒
+#define DYNAMIC_KEYMAP_LAYER_COUNT 6    // レイヤ数
