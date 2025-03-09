@@ -96,7 +96,7 @@ const uint16_t PROGMEM comboBN[] = {KC_B, KC_N, COMBO_END};
 
 combo_t key_combos[] = 
 {
-  COMBO(comboFG, KC_F13),         /* F13 */
-  COMBO(comboHJ, KC_F14),         /* F14 */
-  COMBO(comboBN, LSFT(KC_MINUS)), /*  _  */
+  COMBO(comboFG, KC_F13),                   /* F13 */
+  COMBO(comboHJ, KC_F14),                   /* F14 */
+  COMBO(comboBN, LSFT(KC_NONUS_BACKSLASH)), /*  _  */
 };
