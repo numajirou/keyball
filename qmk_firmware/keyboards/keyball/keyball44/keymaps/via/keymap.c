@@ -1,21 +1,3 @@
-/*
-Copyright 2022 @Yowkees
-Copyright 2022 MURAOKA Taro (aka KoRoN, @kaoriya)
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #include QMK_KEYBOARD_H
 
 #include "quantum.h"
@@ -24,11 +6,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "cpiChange.c"
 #endif
 
-
 enum my_keyball_keycodes {
   PRC_SW,                       // Precision モードスイッチ  
 };
-
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -91,12 +71,14 @@ void oledkit_render_info_user(void) {
 }
 #endif
 
+/* オートマウスレイヤ */
 #ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
 void pointing_device_init_user(void) {
     set_auto_mouse_enable(true);
 }
 #endif
 
+/* CPI調整機構 */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
       #ifdef PRECISION_ENABLE
@@ -106,3 +88,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
+
+/* コンボキー */
+const uint16_t PROGMEM comboFG[] = {KC_F, KC_G, COMBO_END};
+const uint16_t PROGMEM comboHJ[] = {KC_H, KC_J, COMBO_END};
+const uint16_t PROGMEM comboBN[] = {KC_B, KC_N, COMBO_END};
+
+combo_t key_combos[] = 
+{
+  COMBO(comboFG, KC_F13),         /* F13 */
+  COMBO(comboHJ, KC_F14),         /* F14 */
+  COMBO(comboBN, LSHT(KC_MINUS)), /*  _  */
+};
