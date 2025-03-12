@@ -90,13 +90,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 /* コンボキー */
-const uint16_t PROGMEM comboFG[] = {KC_F, KC_G, COMBO_END};
-const uint16_t PROGMEM comboHJ[] = {KC_H, KC_J, COMBO_END};
-const uint16_t PROGMEM comboBN[] = {KC_B, KC_N, COMBO_END};
+const uint16_t PROGMEM comboF13[] = {KC_E, KC_F, COMBO_END};
+const uint16_t PROGMEM comboF14[] = {KC_I, KC_J, COMBO_END};
 
 combo_t key_combos[] = 
 {
-  COMBO(comboFG, KC_F13),                   /* F13 */
-  COMBO(comboHJ, KC_F14),                   /* F14 */
-  COMBO(comboBN, LSFT(KC_NONUS_BACKSLASH)), /*  _  */
+  COMBO(comboF13, KC_F13),                   /* F13 */
+  COMBO(comboF14, KC_F14),                   /* F14 */
 };
