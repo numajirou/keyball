@@ -6,10 +6,9 @@
 #include "cpiChange.c"
 #endif
 
-enum my_keyball_keycodes {
-  PRC_SW,                       // Precision モードスイッチ  
-};
-
+/**********************************************************************************************************************/
+/* キーマップ                                                                                                          */
+/**********************************************************************************************************************/
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
@@ -43,58 +42,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-// Auto enable scroll mode when the highest layer is 3
+layer_state_t layer_state_set_user(layer_state_t state)
+{
+  // Auto enable scroll mode when the highest layer is 3
   keyball_set_scroll_mode(get_highest_layer(state) == 3);
-  #ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
-  switch(get_highest_layer(remove_auto_mouse_layer(state, true))) {
-      case 1:
-          state = remove_auto_mouse_layer(state, false);
-          set_auto_mouse_enable(false);
-          break;
-      default:
-          set_auto_mouse_enable(true);
-          break;
-  }
-  #endif
   return state;
 }
 
+/**********************************************************************************************************************/
+/* OLED設定                                                                                                            */
+/**********************************************************************************************************************/
 #ifdef OLED_ENABLE
-
-#    include "lib/oledkit/oledkit.h"
-
-void oledkit_render_info_user(void) {
-    keyball_oled_render_keyinfo();
-    keyball_oled_render_ballinfo();
-    keyball_oled_render_layerinfo();
-}
-#endif
-
-/* オートマウスレイヤ */
-#ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
-void pointing_device_init_user(void) {
-    set_auto_mouse_enable(true);
-}
-#endif
-
-/* CPI調整機構 */
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-      #ifdef PRECISION_ENABLE
-      case PRC_SW:  precision_switch(record->event.pressed); return false;
-      #endif
-      default: break;
-  }
-  return true;
-}
-
-/* コンボキー */
-const uint16_t PROGMEM comboF13[] = {KC_E, KC_F, COMBO_END};
-const uint16_t PROGMEM comboF14[] = {KC_I, KC_J, COMBO_END};
-
-combo_t key_combos[] = 
+#include "lib/oledkit/oledkit.h"
+void oledkit_render_info_user(void)
 {
-  COMBO(comboF13, KC_F13),                   /* F13 */
-  COMBO(comboF14, KC_F14),                   /* F14 */
+  keyball_oled_render_keyinfo();
+  keyball_oled_render_ballinfo();
+  keyball_oled_render_layerinfo();
+}
+#endif
+
+/**********************************************************************************************************************/
+/* コンボキー                                                                                                          */
+/**********************************************************************************************************************/
+const uint16_t PROGMEM comboF13_1[] = {KC_G, KC_R, COMBO_END};
+const uint16_t PROGMEM comboF13_2[] = {KC_E, KC_F, COMBO_END};
+const uint16_t PROGMEM comboF14_1[] = {KC_I, KC_J, COMBO_END};
+const uint16_t PROGMEM comboF14_2[] = {KC_H, KC_U, COMBO_END};
+
+combo_t key_combos[] =
+{
+        COMBO(comboF13_1, KC_F13), /* F13 */
+        COMBO(comboF13_2, KC_F13), /* F13 */
+        COMBO(comboF14_1, KC_F14), /* F14 */
+        COMBO(comboF14_2, KC_F14), /* F14 */
 };
